@@ -1,13 +1,13 @@
 package com.rest.assured.base.lib.design;
 
-import io.restassured.specification.RequestSpecification;
+import io.restassured.builder.RequestSpecBuilder;
 
 public interface ApiClient {	
 
-	ResponseAPI get(RequestSpecification request, String endPoint);	
-	ResponseAPI post(RequestSpecification request, String endPoint, Object body);
-	ResponseAPI put(RequestSpecification request, String endPoint, Object body);
-	ResponseAPI patch(RequestSpecification request, String endPoint, Object body);
-	ResponseAPI delete(RequestSpecification request, String endPoint);
+	ResponseAPI get(RequestSpecBuilder request, String endPoint);	
+	ResponseAPI post(RequestSpecBuilder request, String endPoint, Object body);
+	ResponseAPI put(RequestSpecBuilder request, String endPoint, Object body);
+	ResponseAPI patch(RequestSpecBuilder request, String endPoint, Object body);
+	ResponseAPI delete(RequestSpecBuilder request, String endPoint);
 
 }

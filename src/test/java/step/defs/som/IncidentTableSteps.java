@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.builder.RequestSpecBuilder;
 import service.now.pojos.model.IncidentRequestPayload;
-import service.now.som.IncidentService;
+import service.now.som.with.restassured.base.IncidentService;
 
 import static io.restassured.RestAssured.basic;
 
@@ -61,13 +61,13 @@ public class IncidentTableSteps {
 	@When("validate the status code and status line of non existing sys id")
 	public void validate_the_status_code_and_status_line_of_non_existing_sys_id() {
 		//response.then().statusCode(404).statusLine(Matchers.containsString("Not Found"));
-	    incidentService.validateResponse(404, "Not Found");
+	    incidentService.validateResponse(404, "Not Found", "application/json");
 	}
 
 	@Then("validate the status code and status line of GET method")
 	public void validate_the_status_code_and_status_line_of_get_method() {
 		//response.then().statusCode(200).statusLine(Matchers.containsString("OK"));
-		incidentService.validateResponse(200, "OK");
+		incidentService.validateResponse(200, "OK", "application/json");
 	}
 
 	@When("add the create incident request body as string")
@@ -119,7 +119,7 @@ public class IncidentTableSteps {
 	@Then("validate the status code and status line")
 	public void validate_the_status_code_and_status_line() {
 		//response.then().assertThat().statusCode(201).statusLine(Matchers.containsString("Created"));
-		incidentService.validateResponse(201, "Created");
+		incidentService.validateResponse(201, "Created", "application/json");
 	}
 
 }
