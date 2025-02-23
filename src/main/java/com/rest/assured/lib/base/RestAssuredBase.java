@@ -6,23 +6,27 @@ import com.rest.assured.base.lib.design.ResponseAPI;
 import static io.restassured.RestAssured.*;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class RestAssuredBase implements ApiClient {
 	
 	Response response;	
+	
+	private RequestSpecification preCondition(RequestSpecBuilder request) {
+		return given()
+				 .spec(request.build())
+				 .filter(new RestAssuredLogListener());
+	}
 
 	@Override
 	public ResponseAPI get(RequestSpecBuilder request, String endPoint) {
-		response = given().spec(request.build())
-		                  .when()
-		                  .get(endPoint);		
+		response = preCondition(request).get(endPoint);
 		return new ResponseImpl(response);
 	}
 
 	@Override
 	public ResponseAPI post(RequestSpecBuilder request, String endPoint, Object body) {
-		response = given().spec(request.build())
-				          .when()
+		response = preCondition(request)
 				          .body(body)
 				          .post(endPoint);
 		return new ResponseImpl(response);
@@ -30,8 +34,7 @@ public class RestAssuredBase implements ApiClient {
 
 	@Override
 	public ResponseAPI put(RequestSpecBuilder request, String endPoint, Object body) {
-		response = given().spec(request.build())
-		                  .when()
+		response = preCondition(request)
 		                  .body(body)
 		                  .put(endPoint);
         return new ResponseImpl(response);
@@ -39,8 +42,7 @@ public class RestAssuredBase implements ApiClient {
 
 	@Override
 	public ResponseAPI patch(RequestSpecBuilder request, String endPoint, Object body) {
-		response = given().spec(request.build())
-                          .when()
+		response = preCondition(request)
                           .body(body)
                           .patch(endPoint);
         return new ResponseImpl(response);
@@ -48,8 +50,7 @@ public class RestAssuredBase implements ApiClient {
 
 	@Override
 	public ResponseAPI delete(RequestSpecBuilder request, String endPoint) {
-		response = given().spec(request.build())
-                          .when()
+		response = preCondition(request)
                           .delete(endPoint);
         return new ResponseImpl(response);
 	}
